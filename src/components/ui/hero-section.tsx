@@ -71,7 +71,7 @@ const menuItems = [
     { name: 'Resources', href: '#faq' },
 ]
 
-const HeroHeader = () => {
+export const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false)
     return (
         <header className="fixed top-0 z-50 w-full bg-[#0A0A0A]/80 backdrop-blur-md">
