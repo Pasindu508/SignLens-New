@@ -166,7 +166,12 @@ function StickyCard({
           ease: "easeInOut",
           delay: 0.2
         }}
-        style={{ transformOrigin: "top center" }}
+        style={{ 
+          transformOrigin: "top center",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          WebkitFontSmoothing: "subpixel-antialiased"
+        }}
         className={`rounded-[2.5rem] bg-white pt-16 px-4 pb-4 shadow-2xl`}
       >
         {/* Inner Color Card */}
