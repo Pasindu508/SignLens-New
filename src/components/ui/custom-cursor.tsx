@@ -7,6 +7,26 @@ export const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)")
+    const hoverQuery = window.matchMedia("(hover: none)")
+    
+    const updateMobileStatus = () => {
+      setIsMobile(mediaQuery.matches || hoverQuery.matches)
+    }
+    
+    updateMobileStatus()
+    
+    mediaQuery.addEventListener("change", updateMobileStatus)
+    hoverQuery.addEventListener("change", updateMobileStatus)
+    
+    return () => {
+      mediaQuery.removeEventListener("change", updateMobileStatus)
+      hoverQuery.removeEventListener("change", updateMobileStatus)
+    }
+  }, [])
 
   // Motion values for raw mouse position
   const mouseX = useMotionValue(0)
@@ -66,7 +86,7 @@ export const CustomCursor = () => {
     }
   }, [isVisible, mouseX, mouseY])
 
-  if (!isVisible) return null
+  if (!isVisible || isMobile) return null
 
   return (
     <>
