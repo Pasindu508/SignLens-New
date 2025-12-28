@@ -6,6 +6,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion"
 export const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isClicking, setIsClicking] = useState(false)
 
   // Motion values for raw mouse position
   const mouseX = useMotionValue(0)
@@ -42,17 +43,24 @@ export const CustomCursor = () => {
       setIsHovering(isClickable)
     }
 
+    const handleMouseDown = () => setIsClicking(true)
+    const handleMouseUp = () => setIsClicking(false)
+
     const handleMouseLeave = () => setIsVisible(false)
     const handleMouseEnter = () => setIsVisible(true)
 
     window.addEventListener("mousemove", updateMousePosition)
     window.addEventListener("mouseover", handleMouseOver)
+    window.addEventListener("mousedown", handleMouseDown)
+    window.addEventListener("mouseup", handleMouseUp)
     document.body.addEventListener("mouseleave", handleMouseLeave)
     document.body.addEventListener("mouseenter", handleMouseEnter)
 
     return () => {
       window.removeEventListener("mousemove", updateMousePosition)
       window.removeEventListener("mouseover", handleMouseOver)
+      window.removeEventListener("mousedown", handleMouseDown)
+      window.removeEventListener("mouseup", handleMouseUp)
       document.body.removeEventListener("mouseleave", handleMouseLeave)
       document.body.removeEventListener("mouseenter", handleMouseEnter)
     }
@@ -70,16 +78,21 @@ export const CustomCursor = () => {
       
       {/* Outer Ring - Smooth Follower */}
       <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full border-2 border-[#9FE870] bg-[#9FE870]/10 backdrop-blur-[1px]"
+        className="fixed top-0 left-0 z-[99999] pointer-events-none rounded-full border-2 backdrop-blur-[1px]"
         style={{
           x: ringX,
           y: ringY,
           translateX: "-50%",
           translateY: "-50%",
+          borderColor: "#9FE870",
+          backgroundColor: isClicking ? "rgba(159, 232, 112, 0.2)" : "rgba(159, 232, 112, 0.05)",
+          boxShadow: isHovering 
+            ? "0 0 0 1px rgba(0,0,0,0.5), 0 0 20px rgba(159, 232, 112, 0.4)" 
+            : "0 0 0 1px rgba(0,0,0,0.5), 0 0 10px rgba(159, 232, 112, 0.2)",
         }}
         animate={{
-          height: isHovering ? 64 : 32,
-          width: isHovering ? 64 : 32,
+          height: isClicking ? 48 : (isHovering ? 64 : 32),
+          width: isClicking ? 48 : (isHovering ? 64 : 32),
         }}
         transition={{
           type: "spring",
@@ -90,18 +103,21 @@ export const CustomCursor = () => {
 
       {/* Inner Dot - Snappy Follower */}
       <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full bg-[#9FE870]"
+        className="fixed top-0 left-0 z-[99999] pointer-events-none rounded-full"
         style={{
           x: dotX,
           y: dotY,
           translateX: "-50%",
           translateY: "-50%",
+          backgroundColor: "#9FE870",
+          boxShadow: "0 0 0 1px rgba(0,0,0,0.5)",
         }}
         animate={{
-          height: isHovering ? 8 : 8,
-          width: isHovering ? 8 : 8,
+          height: isClicking ? 6 : (isHovering ? 8 : 8),
+          width: isClicking ? 6 : (isHovering ? 8 : 8),
         }}
       />
     </>
   )
+
 }
