@@ -49,9 +49,15 @@ export function PrismFeatures() {
   return (
     <section id="features" className="w-full py-16 md:py-32 bg-black text-white relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <h2 className="text-4xl md:text-6xl text-center mb-12 md:mb-24 font-pixel tracking-tight text-white">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl md:text-6xl text-center mb-12 md:mb-24 font-pixel tracking-tight text-white"
+        >
           What you'll do
-        </h2>
+        </motion.h2>
         
         <div className="relative">
           {/* Desktop Crosshair SVG Overlay */}

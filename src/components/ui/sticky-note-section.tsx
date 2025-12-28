@@ -11,12 +11,24 @@ export function StickyNoteSection() {
     <section id="about" className="relative w-full overflow-hidden bg-black py-12 md:py-24">
       
       <div className="relative z-10 container mx-auto px-4 text-center mb-12">
-        <h2 className="text-4xl md:text-6xl mb-8 font-pixel tracking-tight text-white">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl md:text-6xl mb-8 font-pixel tracking-tight text-white"
+        >
           About the platform
-        </h2>
-        <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-sans leading-relaxed">
+        </motion.h2>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-sans leading-relaxed"
+        >
           SignLens is a browser-based Deaf–hearing communication platform. Anyone can join a call and communicate naturally using sign, speech, or text—with real-time translation in both directions.
-        </p>
+        </motion.p>
       </div>
 
       <div ref={containerRef} className="container relative mx-auto flex min-h-[800px] max-w-6xl flex-col items-center gap-12 px-4 md:block md:min-h-[1200px]">

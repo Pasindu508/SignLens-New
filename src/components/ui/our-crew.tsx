@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 
@@ -41,9 +44,15 @@ export function OurCrew() {
         />
 
       <div className="relative z-10 w-full">
-        <h2 className="text-5xl md:text-6xl text-center mb-24 font-pixel tracking-tight text-white">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-5xl md:text-6xl text-center mb-24 font-pixel tracking-tight text-white"
+        >
           Meet Our Crew
-        </h2>
+        </motion.h2>
 
         <InfiniteSlider gap={32} duration={70} pauseOnHover>
           {[...crewMembers, ...crewMembers].map((member, index) => (

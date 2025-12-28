@@ -82,9 +82,15 @@ export function Testimonial() {
         />
 
       <div ref={containerRef} className="relative w-full max-w-5xl z-10" onMouseMove={handleMouseMove}>
-        <h2 className="text-5xl md:text-6xl text-center mb-24 font-pixel tracking-tight text-white">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-5xl md:text-6xl text-center mb-24 font-pixel tracking-tight text-white"
+        >
           Testimonials
-        </h2>
+        </motion.h2>
         {/* Oversized index number - positioned to bleed off left edge */}
         <motion.div
           className="absolute -left-8 top-1/2 -translate-y-1/2 text-[12rem] md:text-[28rem] font-bold font-pixel text-[#9FE870]/10 select-none pointer-events-none leading-none tracking-tighter"

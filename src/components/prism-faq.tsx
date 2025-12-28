@@ -2,7 +2,7 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import Link from 'next/link'
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { HelpCircle, Mail } from 'lucide-react'
 
 export function PrismFAQ() {
@@ -59,36 +59,72 @@ export function PrismFAQ() {
     },
   ]
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  }
+
   return (
     <section id="faq" className="py-16 md:py-32 relative bg-black">
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-4xl md:text-6xl font-pixel tracking-tight text-white mb-6">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-4xl md:text-6xl font-pixel tracking-tight text-white mb-6"
+            >
               FAQs
-            </h2>
+            </motion.h2>
         </div>
 
-        <Accordion type="single" collapsible className="space-y-4">
-          {faqItems.map((item) => (
-            <AccordionItem 
-                key={item.id} 
-                value={item.id}
-                className="!border !border-white/30 rounded-2xl px-4 md:px-8 data-[state=open]:bg-white/5 transition-colors"
-            >
-              <AccordionTrigger className="group text-2xl font-medium py-8 hover:text-white hover:no-underline [&>svg]:hidden data-[state=open]:text-[#bef264]">
-                <span className="text-left">{item.question}</span>
-                <span className="shrink-0 text-white/70 ml-6 group-data-[state=open]:text-[#bef264]">
-                    <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-200">
-                        <rect x="2.75" y="7" width="9.5" height="1" rx="0.5" fill="currentColor"/>
-                        <rect x="7" y="2.75" width="1" height="9.5" rx="0.5" fill="currentColor" className="origin-center transition-transform duration-200 group-data-[state=open]:rotate-90"/>
-                    </svg>
-                </span>
-              </AccordionTrigger>
-              <AccordionContent className="text-white/70 text-lg pb-8">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+        <Accordion type="single" collapsible className="space-y-4" asChild>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {faqItems.map((item) => (
+              <motion.div key={item.id} variants={itemVariants}>
+                <AccordionItem 
+                    value={item.id}
+                    className="!border !border-white/30 rounded-2xl px-4 md:px-8 data-[state=open]:bg-white/5 transition-colors"
+                >
+                  <AccordionTrigger className="group text-2xl font-medium py-8 hover:text-white hover:no-underline [&>svg]:hidden data-[state=open]:text-[#bef264]">
+                    <span className="text-left">{item.question}</span>
+                    <span className="shrink-0 text-white/70 ml-6 group-data-[state=open]:text-[#bef264]">
+                        <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-200">
+                            <rect x="2.75" y="7" width="9.5" height="1" rx="0.5" fill="currentColor"/>
+                            <rect x="7" y="2.75" width="1" height="9.5" rx="0.5" fill="currentColor" className="origin-center transition-transform duration-200 group-data-[state=open]:rotate-90"/>
+                        </svg>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-white/70 text-lg pb-8">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            ))}
+          </motion.div>
         </Accordion>
       </div>
     </section>
