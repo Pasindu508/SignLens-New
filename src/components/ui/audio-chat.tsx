@@ -136,6 +136,7 @@ export function VoiceChat() {
           willChange: "width, height, border-radius",
           transform: "translateZ(0)",
           backfaceVisibility: "hidden",
+          contain: "layout style paint",
         }}
       >
         {/* Audio Wave Icon */}
@@ -201,15 +202,15 @@ export function VoiceChat() {
               key={participant.id}
               className="absolute transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
               style={{
-                left: pos.x,
-                top: pos.y,
+                transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
+                left: 0,
+                top: 0,
                 width: pos.size,
                 height: isExpanded ? pos.size + 28 : pos.size,
                 opacity: pos.opacity,
                 zIndex: isExpanded ? 1 : 4 - index,
                 transitionDelay: `${delay}ms`,
-                willChange: "left, top, width, height, opacity",
-                transform: "translateZ(0)",
+                willChange: "transform, width, height, opacity",
               }}
             >
               <div className="relative flex flex-col items-center">
