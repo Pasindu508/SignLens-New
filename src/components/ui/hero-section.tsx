@@ -27,15 +27,30 @@ export function HeroSection() {
 
                     <section className="relative z-10 flex flex-col items-center justify-center px-4 py-20 md:py-32">
                         <div className="mx-auto max-w-5xl text-center">
-                        <h1 className="font-pixel text-4xl md:text-6xl lg:text-7xl tracking-wider text-white mb-8 uppercase leading-tight">
+                        <motion.h1 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            className="font-pixel text-4xl md:text-6xl lg:text-7xl tracking-wider text-white mb-8 uppercase leading-tight"
+                        >
                             SIGN → SPEAK → UNDERSTAND. ZERO BARRIERS.
-                        </h1>
+                        </motion.h1>
                         
-                        <p className="mx-auto max-w-4xl text-lg md:text-xl text-gray-400 mb-12 leading-relaxed font-sans">
+                        <motion.p 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="mx-auto max-w-4xl text-lg md:text-xl text-gray-400 mb-12 leading-relaxed font-sans"
+                        >
                             99.98% ASL accuracy • 45 FPS real-time • No apps • No interpreters • No barriers.
-                        </p>
+                        </motion.p>
 
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                        >
                             <Button
                                 asChild
                                 size="lg"
@@ -54,7 +69,7 @@ export function HeroSection() {
                                     Learn More
                                 </Link>
                             </Button>
-                        </div>
+                        </motion.div>
                     </div>
                 </section>
                 </div>

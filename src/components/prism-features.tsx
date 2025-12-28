@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion } from "framer-motion";
 import {
   ListTodo,
   Code,
@@ -54,12 +55,18 @@ export function PrismFeatures() {
         
         <div className="relative">
           {/* Desktop Crosshair SVG Overlay */}
-          <svg 
+          <motion.svg 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1 }}
             className="absolute inset-0 w-full h-full pointer-events-none hidden md:block z-0"
             fill="none"
           >
             {/* Vertical Line Top */}
-            <line 
+            <motion.line 
+              initial={{ y2: "50%" }}
+              whileInView={{ y2: "0%" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
               x1="50%" 
               y1="50%" 
               x2="50%" 
@@ -70,7 +77,10 @@ export function PrismFeatures() {
               strokeOpacity="0.3" 
             />
             {/* Vertical Line Bottom */}
-            <line 
+            <motion.line 
+              initial={{ y2: "50%" }}
+              whileInView={{ y2: "100%" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
               x1="50%" 
               y1="50%" 
               x2="50%" 
@@ -81,7 +91,10 @@ export function PrismFeatures() {
               strokeOpacity="0.3" 
             />
             {/* Horizontal Line Left */}
-            <line 
+            <motion.line 
+              initial={{ x2: "50%" }}
+              whileInView={{ x2: "0%" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
               x1="50%" 
               y1="50%" 
               x2="0" 
@@ -92,7 +105,10 @@ export function PrismFeatures() {
               strokeOpacity="0.3" 
             />
             {/* Horizontal Line Right */}
-            <line 
+            <motion.line 
+              initial={{ x2: "50%" }}
+              whileInView={{ x2: "100%" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
               x1="50%" 
               y1="50%" 
               x2="100%" 
@@ -102,11 +118,16 @@ export function PrismFeatures() {
               strokeDasharray="8 8" 
               strokeOpacity="0.3" 
             />
-          </svg>
+          </motion.svg>
 
           <div className="grid grid-cols-1 md:grid-cols-2">
             {/* Item 1: Accessible Meetings */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
               <FeatureItem
                 icon={
                   <div className="w-16 h-16 rounded-2xl bg-[#60A5FA] flex items-center justify-center">
@@ -116,12 +137,17 @@ export function PrismFeatures() {
                 title="Host accessible meetings"
                 description="with real‑time sign ↔ speech"
               />
-            </div>
+            </motion.div>
 
             <MobileDivider />
 
             {/* Item 2: Workshops */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
               <FeatureItem
                 icon={
                   <div className="w-16 h-16 rounded-2xl bg-[#9FE870] flex items-center justify-center">
@@ -131,12 +157,17 @@ export function PrismFeatures() {
                 title="Run Deaf-inclusive"
                 description="workshops and classes"
               />
-            </div>
+            </motion.div>
 
             <MobileDivider />
 
             {/* Item 3: Hackathons */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
               <FeatureItem
                 icon={
                   <div className="w-16 h-16 rounded-2xl bg-[#3B82F6] flex items-center justify-center">
@@ -146,12 +177,17 @@ export function PrismFeatures() {
                 title="Organize inclusive hackathons"
                 description="and team projects"
               />
-            </div>
+            </motion.div>
 
             <MobileDivider />
 
             {/* Item 4: Community */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              viewport={{ once: true }}
+            >
               <FeatureItem
                 icon={
                   <div className="w-16 h-16 rounded-2xl bg-[#C084FC] flex items-center justify-center">
@@ -161,7 +197,7 @@ export function PrismFeatures() {
                 title="Build an always-accessible"
                 description="Deaf–hearing community"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
