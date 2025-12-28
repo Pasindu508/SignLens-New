@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { Menu, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export function HeroSection() {
     return (
@@ -116,32 +116,85 @@ export const HeroHeader = () => {
 
                     {/* Mobile Menu Toggle */}
                     <button
-                        className="lg:hidden text-white"
+                        className="lg:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-center gap-1.5 focus:outline-none"
                         onClick={() => setMenuState(!menuState)}
+                        aria-label={menuState ? "Close menu" : "Open menu"}
                     >
-                        {menuState ? <X /> : <Menu />}
+                        <motion.span
+                            className="w-6 h-0.5 bg-white rounded-full origin-center"
+                            animate={menuState ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        />
+                        <motion.span
+                            className="w-6 h-0.5 bg-white rounded-full origin-center"
+                            animate={menuState ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.2 }}
+                        />
+                        <motion.span
+                            className="w-6 h-0.5 bg-white rounded-full origin-center"
+                            animate={menuState ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        />
                     </button>
                 </div>
             </nav>
 
             {/* Mobile Menu Dropdown */}
-            {menuState && (
-                <div className="lg:hidden absolute top-full left-0 w-full bg-black border-b border-white/10 p-6 flex flex-col gap-4">
-                    {menuItems.map((item) => (
-                        <Link 
-                            key={item.name} 
-                            href={item.href}
-                            className="text-lg font-medium text-gray-300 hover:text-[#9FE870]"
-                            onClick={() => setMenuState(false)}
+            <AnimatePresence>
+                {menuState && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ 
+                            opacity: 1, 
+                            y: 0,
+                            transition: { 
+                                duration: 0.3,
+                                ease: "easeOut",
+                                staggerChildren: 0.1
+                            }
+                        }}
+                        exit={{ 
+                            opacity: 0, 
+                            y: -20,
+                            transition: { duration: 0.2, ease: "easeIn" }
+                        }}
+                        className="lg:hidden absolute top-full left-0 w-full bg-black border-b border-white/10 p-6 flex flex-col gap-4 shadow-2xl"
+                    >
+                        {menuItems.map((item) => (
+                            <motion.div
+                                key={item.name}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -10 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <Link 
+                                    href={item.href}
+                                    className="block text-lg font-medium text-gray-300 hover:text-[#9FE870] transition-colors"
+                                    onClick={() => setMenuState(false)}
+                                >
+                                    {item.name}
+                                </Link>
+                            </motion.div>
+                        ))}
+                        <motion.div 
+                            className="h-px bg-white/10 my-2" 
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.4 }}
+                        />
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="flex flex-col gap-4"
                         >
-                            {item.name}
-                        </Link>
-                    ))}
-                    <div className="h-px bg-white/10 my-2" />
-                    <Link href="/demo" className="text-lg font-medium text-white">Request Demo</Link>
-                    <Link href="/signup" className="text-lg font-medium text-[#9FE870]">Create Account</Link>
-                </div>
-            )}
+                            <Link href="/demo" className="text-lg font-medium text-white hover:text-[#9FE870] transition-colors">Request Demo</Link>
+                            <Link href="/signup" className="text-lg font-medium text-[#9FE870] hover:text-[#8CD660] transition-colors">Create Account</Link>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     )
 }
