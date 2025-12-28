@@ -133,6 +133,9 @@ export function VoiceChat() {
           width: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH,
           height: isExpanded ? EXPANDED_HEIGHT : 60,
           borderRadius: isExpanded ? 24 : 999,
+          willChange: "width, height, border-radius",
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
         }}
       >
         {/* Audio Wave Icon */}
@@ -205,6 +208,8 @@ export function VoiceChat() {
                 opacity: pos.opacity,
                 zIndex: isExpanded ? 1 : 4 - index,
                 transitionDelay: `${delay}ms`,
+                willChange: "left, top, width, height, opacity",
+                transform: "translateZ(0)",
               }}
             >
               <div className="relative flex flex-col items-center">
@@ -213,6 +218,7 @@ export function VoiceChat() {
                   style={{
                     width: pos.size,
                     height: pos.size,
+                    willChange: "width, height",
                   }}
                 >
                   <img
