@@ -204,6 +204,11 @@ html, body {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Ensure inputs remain selectable */
+input, textarea {
+  user-select: text;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

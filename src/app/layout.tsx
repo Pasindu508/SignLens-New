@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${pixelFont.variable} ${bebasNeue.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${pixelFont.variable} ${bebasNeue.variable} antialiased select-none`}
       >
         {/* Initialize default GTM consent (denied) before any tags */}
         <GTMConsentInitializer />
