@@ -11,6 +11,7 @@ export function SmoothScroll() {
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
+      syncTouch: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
     });
