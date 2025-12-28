@@ -3,6 +3,7 @@ import { CookieConsentProvider } from "@/components/cookie-consent-provider";
 import GoogleTagManager, { GoogleTagManagerNoScript } from "@/components/google-tag-manager";
 import { GTMConsentInitializer } from "@/components/gtm-consent-initializer";
 import { VoiceChat } from "@/components/ui/audio-chat";
+import { CustomCursor } from "@/components/ui/custom-cursor";
 import { Geist, Geist_Mono, VT323, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 
@@ -61,6 +62,7 @@ export default function RootLayout({
           <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
             <VoiceChat />
           </div>
+          <CustomCursor />
         </CookieConsentProvider>
       </body>
     </html>
