@@ -1,16 +1,30 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, useMotionValue, useSpring } from "framer-motion"
 
 export const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
+  // Motion values for raw mouse position
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  // Spring physics for the outer ring (smooth, buttery lag)
+  const springConfig = { damping: 20, stiffness: 300, mass: 0.5 }
+  const ringX = useSpring(mouseX, springConfig)
+  const ringY = useSpring(mouseY, springConfig)
+
+  // Spring physics for the inner dot (snappy, follows closely)
+  const dotSpringConfig = { damping: 30, stiffness: 700, mass: 0.1 }
+  const dotX = useSpring(mouseX, dotSpringConfig)
+  const dotY = useSpring(mouseY, dotSpringConfig)
+
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
       if (!isVisible) setIsVisible(true)
     }
 
@@ -42,7 +56,7 @@ export const CustomCursor = () => {
       document.body.removeEventListener("mouseleave", handleMouseLeave)
       document.body.removeEventListener("mouseenter", handleMouseEnter)
     }
-  }, [isVisible])
+  }, [isVisible, mouseX, mouseY])
 
   if (!isVisible) return null
 
@@ -53,29 +67,41 @@ export const CustomCursor = () => {
           cursor: none !important;
         }
       `}</style>
+      
+      {/* Outer Ring - Smooth Follower */}
       <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none"
+        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full border-2 border-[#9FE870] bg-[#9FE870]/10 backdrop-blur-[1px]"
+        style={{
+          x: ringX,
+          y: ringY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
         animate={{
-          x: mousePosition.x - (isHovering ? 16 : 8),
-          y: mousePosition.y - (isHovering ? 16 : 8),
-          scale: isHovering ? 1.5 : 1,
+          height: isHovering ? 64 : 32,
+          width: isHovering ? 64 : 32,
         }}
         transition={{
           type: "spring",
-          stiffness: 250,
+          stiffness: 200,
           damping: 20,
-          mass: 0.5
         }}
-      >
-        <div
-          className={`rounded-full border-2 border-[#9FE870] transition-all duration-200 bg-[#9FE870]/20 backdrop-blur-sm ${
-            isHovering ? "h-8 w-8" : "h-4 w-4"
-          }`}
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-            <div className={`rounded-full bg-[#9FE870] ${isHovering ? "h-1 w-1" : "h-1 w-1"}`} />
-        </div>
-      </motion.div>
+      />
+
+      {/* Inner Dot - Snappy Follower */}
+      <motion.div
+        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full bg-[#9FE870]"
+        style={{
+          x: dotX,
+          y: dotY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+        animate={{
+          height: isHovering ? 8 : 8,
+          width: isHovering ? 8 : 8,
+        }}
+      />
     </>
   )
 }
