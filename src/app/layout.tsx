@@ -5,6 +5,7 @@ import { GTMConsentInitializer } from "@/components/gtm-consent-initializer";
 import { VoiceChat } from "@/components/ui/audio-chat";
 import { CustomCursor } from "@/components/ui/custom-cursor";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono, VT323, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 
@@ -65,6 +66,7 @@ export default function RootLayout({
           </div>
           <CustomCursor />
           <SmoothScroll />
+          <Analytics />
         </CookieConsentProvider>
       </body>
     </html>
